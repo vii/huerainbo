@@ -301,7 +301,7 @@ function render(time) {
     twgl.resizeCanvasToDisplaySize(gl.canvas)
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
     twgl.setUniforms(rainbowProgram, {
-        time: time * 0.001,
+        wobble: (time * 0.012) % (2*Math.PI),
         resolution: [gl.canvas.width, gl.canvas.height],
 	background: [lightBrightness,lightBrightness,lightBrightness],
 	chosenPoint: chosenPoint,
