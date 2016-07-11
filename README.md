@@ -14,5 +14,5 @@ Dancing rainbow to control Philips Hue lights
 * huerainbo asks your browser to call the www.meethue.com/api/nupnp Philips API for the bridge on your network
 * Your browser talks to the bridge  directly via AJAX (some stupidity around browser settings means that
  the huerainbo webpage must be served over HTTP)
- * WebGL displays a moving rainbow you can click on to choose a colour. Have fun!
+* WebGL fragment shader displays a moving rainbow you can click on to choose a colour. Have fun!
  
