@@ -294,11 +294,12 @@ var twoTriangles = twgl.createBufferInfoFromArrays(gl, {
 	    1, -1, 0,
 	    1, 1, 0],
 })
+gl.useProgram(rainbowProgram.program)
+twgl.setBuffersAndAttributes(gl, rainbowProgram, twoTriangles)
+
 function render(time) {
     twgl.resizeCanvasToDisplaySize(gl.canvas)
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
-    gl.useProgram(rainbowProgram.program)
-    twgl.setBuffersAndAttributes(gl, rainbowProgram, twoTriangles)
     twgl.setUniforms(rainbowProgram, {
         time: time * 0.001,
         resolution: [gl.canvas.width, gl.canvas.height],
