@@ -1,0 +1,63 @@
+<head>
+    <script id="rainbow-vertex-shader" type="x-twgl-vertex-shader">
+      attribute vec4 position;
+      void main() {
+         gl_Position = position;
+      }
+  </script>
+  <script id="rainbow-fragment-shader" type="x-twgl-fragment-shader">
+precision mediump float;
+uniform vec2 resolution;
+uniform vec3 background;
+uniform vec2 chosenPoint;
+uniform float time;
+
+vec3 hsv2rgb(vec3 c) {
+    vec3 p = abs(fract(c.xxx + vec3(1.,2./3.,1./3.)) * 6.0 - vec3(3));
+    return c.z * mix(vec3(1), clamp(p - vec3(1), 0.0, 1.0), c.y);
+}
+
+void main() {
+  vec2 uv = gl_FragCoord.xy / resolution.xx - vec2(.5,0);
+
+  float h = length(uv)*(resolution.x/resolution.y * 2.2) -1. + sin((uv.x + 1.2*time) * 10.) * .03;
+	
+  vec3 rgb = background;
+
+  if (h > 0. && h < 1.) {
+     float hue = .85*(mix(h, 1. - (1. - h*h), .5));
+     float sat = 1.;
+     float lum = clamp(atan(uv.y, uv.x) + .2, 0., 1.);
+     rgb = hsv2rgb(vec3(hue,sat,lum));
+     rgb = mix(background, rgb,  clamp(min(h, 1.-h)*100., 0., 1.));
+  }
+	
+  gl_FragColor = vec4(rgb, 1. );
+}
+  </script>
+  <script src="js/jshue.js" ></script>
+  <script src="js/twgl-full.js"></script>
+  <style>
+    body { margin: 0; padding: 0; }
+    #msg {
+    position: fixed;
+    font-size: 10vh;
+    bottom: 0;
+    text-shadow: 0 0 4vmax #0f0ff0, 0 0 3vmax #0ff00f, 0 0 2vmax #ff0f0f, 0 0 2vmax #ffffff;
+    color: #ffffff;
+    text-align: center;
+    display: block;
+    width: 100%;
+    font-weight: bolder;
+    font-family: verdana, sans-serif;
+    pointer-events:none;
+    }
+  </style>
+  <title>huerainbo!</title>
+</head>
+<body>
+  <canvas id="twgl-canvas" style="display: block; width: 100vw;
+				  height: 100vh; cursor: crosshair;"></canvas>
+  <p id=msg>huerainbo!</p>
+  <script src="huerainbo.js"></script>
+</body>
