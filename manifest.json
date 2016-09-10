@@ -8,6 +8,11 @@
 	"type": "image/png"
     },
     {
+	"src": "icon-192x192.png",
+	"sizes": "192x192",
+	"type": "image/png"
+    },
+    {
 	"src": "favicon.png",
 	"sizes": "16x16",
 	"type": "image/png"
@@ -15,4 +20,5 @@
   ],
     "start_url": "index.html",
     "display": "standalone",
+    "orientation": "landscape"
 }

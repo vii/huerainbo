@@ -1,7 +1,9 @@
 # huerainbo
-Dancing rainbow to control Philips Hue lights
+Dancing rainbow to control your Philips Hue lights
 
 [Huerainbo!](http://kk2j.com/huerainbo/index.html)
+
+Choose 'Add to homescreen' to install it as a full-screen app on Android
 
 #### This application makes use of the following libraries:
 * [TWGL.js](https://github.com/greggman/twgl.js) by [Greggman](https://github.com/greggman)
