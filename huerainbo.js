@@ -201,6 +201,8 @@ function refreshLights(user, errorFunction) {
 	    bridgeUsers.push(user)
 	    localStorage.setItem('username_' + user.bridge.id, user.username)
 	}
+	localStorage.setItem('bridge_ip', user.bridge.ip)
+	localStorage.setItem('bridge_id', user.bridge.id)	    
 
 	refreshLightState()
     }, errorFunction)
@@ -230,6 +232,26 @@ function tryCreateUsername(bridge) {
 	}
     })
 }
+
+function tryBridge(ip, id) {
+    var bridge = jsHue().bridge(ip)
+    bridge.id = id
+    bridge.ip = ip
+    var username = localStorage.getItem('username_' + id)
+    if (username) {
+	tryUsername(bridge, username)
+    } else {
+	tryCreateUsername(bridge)
+    }
+}
+
+var knownBridgeIP = localStorage.getItem('bridge_ip')
+var knownBridgeID = localStorage.getItem('bridge_id')
+
+if (knownBridgeID && knownBridgeIP) {
+    tryBridge(knownBridgeIP, knownBridgeID)
+}
+
     
 jsHue().discover(
     function(bridges) {
@@ -238,14 +260,7 @@ jsHue().discover(
         } else {
             bridges.forEach(function(b) {
 		msg('Found bridge ' + b.internalipaddress)
-		var bridge = jsHue().bridge(b.internalipaddress)
-		bridge.id = b.id
-		var username = localStorage.getItem('username_' + b.id)
-		if (username) {
-		    tryUsername(bridge, username)
-		} else {
-		    tryCreateUsername(bridge)
-		}
+		tryBridge(b.internalipaddress, b.id)
 	    })
 	}
     })
