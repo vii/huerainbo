@@ -233,10 +233,15 @@ function tryCreateUsername(bridge) {
     })
 }
 
+var knownBridges = {}
 function tryBridge(ip, id) {
+    if (ip in knownBridges) {
+	return
+    }
     var bridge = jsHue().bridge(ip)
     bridge.id = id
     bridge.ip = ip
+    knownBridges[ip] = bridge
     var username = localStorage.getItem('username_' + id)
     if (username) {
 	tryUsername(bridge, username)
